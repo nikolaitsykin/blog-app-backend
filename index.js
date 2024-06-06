@@ -8,6 +8,7 @@ import {
 import { checkAuth } from "./utils/checkAuth.js";
 import * as userController from "./controllers/userController.js";
 import * as postController from "./controllers/postController.js";
+import handleValidationErrors from "./utils/handleValidationErrors.js";
 
 mongoose
   .connect(
@@ -24,15 +25,37 @@ const app = express();
 const port = 4000;
 app.use(express.json());
 
-app.post("/auth/login", validateLogin, userController.login);
-app.post("/auth/register", validateRegister, userController.register);
+app.post(
+  "/auth/login",
+  validateLogin,
+  handleValidationErrors,
+  userController.login
+);
+app.post(
+  "/auth/register",
+  validateRegister,
+  handleValidationErrors,
+  userController.register
+);
 app.get("/auth/me", checkAuth, userController.getMe);
 
-app.get("/posts", checkAuth, validatePost, postController.getAll);
+app.get("/posts", checkAuth, postController.getAll);
 app.get("/posts/:id", postController.getOne);
-app.post("/posts", checkAuth, validatePost, postController.create);
+app.post(
+  "/posts",
+  checkAuth,
+  validatePost,
+  handleValidationErrors,
+  postController.create
+);
 app.delete("/posts/:id", checkAuth, postController.remove);
-app.patch("/posts/:id", checkAuth, postController.update);
+app.patch(
+  "/posts/:id",
+  checkAuth,
+  validatePost,
+  handleValidationErrors,
+  postController.update
+);
 
 app.listen(port, (err) => {
   if (err) throw err;
