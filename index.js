@@ -6,10 +6,8 @@ import {
   validateLogin,
   validatePost,
 } from "./validations/validations.js";
-import { checkAuth } from "./utils/checkAuth.js";
-import * as userController from "./controllers/userController.js";
-import * as postController from "./controllers/postController.js";
-import handleValidationErrors from "./utils/handleValidationErrors.js";
+import { checkAuth, handleValidationErrors } from "./utils/index.js";
+import { userController, postController } from "./controllers/index.js";
 
 mongoose
   .connect(
