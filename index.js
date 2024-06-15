@@ -8,6 +8,7 @@ import {
 } from "./validations/validations.js";
 import { checkAuth, handleValidationErrors } from "./utils/index.js";
 import { userController, postController } from "./controllers/index.js";
+import cors from "cors";
 
 mongoose
   .connect(
@@ -22,6 +23,8 @@ mongoose
 
 const app = express();
 app.use(express.json());
+app.use(cors());
+app.options("*", cors());
 app.use("/uploads", express.static("uploads"));
 
 const storage = multer.diskStorage({
@@ -54,7 +57,9 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
   });
 });
 
-app.get("/posts", checkAuth, postController.getAll);
+app.get("/tags", postController.getLastTags);
+app.get("/posts", postController.getAll);
+app.get("/posts/tags", postController.getLastTags);
 app.get("/posts/:id", postController.getOne);
 app.post(
   "/posts",

@@ -43,10 +43,6 @@ export const validatePost = [
     .withMessage("Text is required")
     .isLength({ min: 3 })
     .withMessage("Text length must be at least 3"),
-  body("tags")
-    .optional()
-    .isLength({ min: 1 })
-    .withMessage("Tags are required")
-    .isString(),
+  body("tags").optional(),
   body("imageUrl").optional().isURL().withMessage("Invalid URL").isString(),
 ];
