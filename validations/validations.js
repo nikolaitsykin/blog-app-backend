@@ -16,7 +16,7 @@ export const validateRegister = [
     .withMessage("Password is required")
     .isLength({ min: 6 })
     .withMessage("Password length must be at least 6"),
-  body("avatarUrl").optional().isURL().withMessage("Invalid URL"),
+  body("avatarUrl").optional(),
 ];
 
 export const validateLogin = [
@@ -44,5 +44,5 @@ export const validatePost = [
     .isLength({ min: 3 })
     .withMessage("Text length must be at least 3"),
   body("tags").optional(),
-  body("imageUrl").optional().isURL().withMessage("Invalid URL").isString(),
+  body("imageUrl").optional(),
 ];

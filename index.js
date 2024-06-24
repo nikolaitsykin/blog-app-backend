@@ -51,12 +51,13 @@ app.post(
 );
 app.get("/auth/me", checkAuth, userController.getMe);
 
-app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
+app.post("/upload", upload.single("image"), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
 });
 
+app.get('/comments', postController.getLastComments );
 app.get("/tags", postController.getLastTags);
 app.get("/posts", postController.getAll);
 app.get("/posts/tags", postController.getLastTags);
@@ -66,8 +67,9 @@ app.post(
   checkAuth,
   validatePost,
   handleValidationErrors,
-  postController.create
+  postController.createPost
 );
+app.post('/comments/:id', checkAuth, postController.createComment);
 app.delete("/posts/:id", checkAuth, postController.remove);
 app.patch(
   "/posts/:id",
@@ -76,6 +78,8 @@ app.patch(
   handleValidationErrors,
   postController.update
 );
+app.patch("/posts/:id/edit", postController.update);
+
 
 const port = 4000;
 app.listen(port, (err) => {
