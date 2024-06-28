@@ -11,9 +11,7 @@ import { userController, postController } from "./controllers/index.js";
 import cors from "cors";
 
 mongoose
-  .connect(
-    "mongodb+srv://admin:admin@cluster0.zdggzrs.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("MongoDB connected");
   })
@@ -57,7 +55,7 @@ app.post("/upload", upload.single("image"), (req, res) => {
   });
 });
 
-app.get('/comments', postController.getLastComments );
+app.get("/comments", postController.getLastComments);
 app.get("/tags", postController.getLastTags);
 app.get("/posts", postController.getAll);
 app.get("/posts/tags", postController.getLastTags);
@@ -69,19 +67,17 @@ app.post(
   handleValidationErrors,
   postController.createPost
 );
-app.post('/comments/:id', checkAuth, postController.createComment);
+app.post("/comments/:id", checkAuth, postController.createComment);
 app.delete("/posts/:id", checkAuth, postController.remove);
 app.patch(
-  "/posts/:id",
+  "/posts/:id/edit",
   checkAuth,
   validatePost,
   handleValidationErrors,
   postController.update
 );
-app.patch("/posts/:id/edit", postController.update);
 
-
-const port = 4000;
+const port = process.env.PORT || 4000;
 app.listen(port, (err) => {
   if (err) throw err;
   console.log("Server OK");
