@@ -82,5 +82,5 @@ app.patch(
 const port = process.env.PORT || 4000;
 app.listen(port, (err) => {
   if (err) throw err;
-  console.log("Server OK");
+  console.log("Started on port", port);
 });
