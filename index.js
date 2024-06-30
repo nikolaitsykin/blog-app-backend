@@ -24,6 +24,9 @@ app.use(express.json());
 app.use(cors());
 app.options("*", cors());
 app.use("/uploads", express.static("uploads"));
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
