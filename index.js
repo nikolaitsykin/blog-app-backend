@@ -11,9 +11,7 @@ import { userController, postController } from "./controllers/index.js";
 import cors from "cors";
 
 mongoose
-  .connect(
-    "mongodb+srv://admin:admin@cluster0.zdggzrs.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("MongoDB connected");
   })
@@ -82,5 +80,6 @@ app.patch(
 const port = process.env.PORT || 4000;
 app.listen(port, (err) => {
   if (err) throw err;
+  console.log("Server OK");
   console.log("Started on port", port);
 });
