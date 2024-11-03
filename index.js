@@ -30,9 +30,6 @@ app.get("/", (req, res) => {
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
-    if (!fs.existsSync("uploads")) {
-      fs.mkdirSync("uploads");
-    }
     cb(null, "uploads");
   },
   filename: (_, file, cb) => {
@@ -83,9 +80,9 @@ app.patch(
   postController.update
 );
 
-app.listen(process.env.PORT || 4000, (err) => {
-  if (err) {
-    return console.log(err);
-  }
-  console.log("Server Ok");
+const port = process.env.PORT || 4000;
+app.listen(port, (err) => {
+  if (err) throw err;
+  console.log("Server OK");
+  console.log("Started on port", port);
 });
