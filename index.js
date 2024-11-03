@@ -11,9 +11,7 @@ import { userController, postController } from "./controllers/index.js";
 import cors from "cors";
 
 mongoose
-  .connect(
-    "mongodb+srv://admin:admin@cluster0.zdggzrs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("MongoDB connected");
   })
